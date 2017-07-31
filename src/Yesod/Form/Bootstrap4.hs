@@ -126,10 +126,10 @@ renderBootstrap4 formLayout aform fragment = do
 -- | (Internal) Render a help widget for tooltips and errors.
 helpWidget :: FieldView site -> WidgetT site IO ()
 helpWidget view = [whamlet|
-    $maybe tt <- fvTooltip view
-      <span .form-text>#{tt}
     $maybe err <- fvErrors view
-      <span .form-text .has-danger>#{err}
+      <div .form-control-feedback>#{err}
+    $maybe tt <- fvTooltip view
+      <small .form-text .text-muted>#{tt}
 |]
 
 -- | How the 'bootstrapSubmit' button should be rendered.
