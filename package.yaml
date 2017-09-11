@@ -1,8 +1,7 @@
 name:                yesod-form-bootstrap4
-version:             0.1.0.1
+version:             0.1.0.2
 synopsis:            renderBootstrap4
-# description:
-github:              ncaq/yesod-form-bootstrap4.git
+github:              ncaq/yesod-form-bootstrap4
 license:             MIT
 author:              ncaq
 maintainer:          ncaq@ncaq.net
