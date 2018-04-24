@@ -111,12 +111,19 @@ renderBootstrap4 formLayout aform fragment = do
                     ^{helpWidget view}
                   $of BootstrapHorizontalForm labelOffset labelSize inputOffset inputSize
                     $if fvId view /= bootstrapSubmitId
-                      <label .form-control-label .#{toOffset labelOffset} .#{toColumn labelSize} for=#{fvId view}>#{fvLabel view}
-                      <div .#{toOffset inputOffset} .#{toColumn inputSize}>
-                        ^{fvInput view}
-                        ^{helpWidget view}
+                      <div .row>
+                        <label
+                          .form-control-label
+                          .#{toOffset labelOffset}
+                          .#{toColumn labelSize}
+                          for=#{fvId view}>#{fvLabel view}
+                        <div .#{toOffset inputOffset} .#{toColumn inputSize}>
+                          ^{fvInput view}
+                          ^{helpWidget view}
                     $else
-                      <div .#{toOffset (addGO inputOffset (addGO labelOffset labelSize))} .#{toColumn inputSize}>
+                      <div
+                        .#{toOffset (addGO inputOffset (addGO labelOffset labelSize))}
+                        .#{toColumn inputSize}>
                         ^{fvInput view}
                         ^{helpWidget view}
                 |]
