@@ -97,7 +97,7 @@ renderBootstrap4 formLayout aform fragment = do
         widget = [whamlet|
             #{fragment}
             $forall view <- views
-              <div .form-group :isJust $ fvErrors view:.has-danger>
+              <div .form-group :isJust (fvErrors view):.has-danger>
                 $case formLayout
                   $of BootstrapBasicForm
                     $if fvId view /= bootstrapSubmitId
