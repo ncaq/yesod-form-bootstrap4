@@ -130,7 +130,7 @@ renderBootstrap4 formLayout aform fragment = do
     return (res, widget)
 
 -- | (Internal) Render a help widget for tooltips and errors.
-helpWidget :: FieldView site -> WidgetT site IO ()
+helpWidget :: FieldView site -> WidgetFor site ()
 helpWidget view = [whamlet|
     $maybe err <- fvErrors view
       <div .form-control-feedback>#{err}
