@@ -1,5 +1,4 @@
 {-# LANGUAGE NamedFieldPuns    #-}
-{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes       #-}
 {-# LANGUAGE TypeFamilies      #-}
@@ -21,7 +20,13 @@ module Yesod.Form.Bootstrap4
     , BootstrapSubmit(..)
     ) where
 
-import           ClassyPrelude.Yesod
+import           Control.Arrow
+import           Data.Maybe
+import           Data.String
+import           Data.Text
+import           Text.Shakespeare.I18N
+import           Yesod.Core
+import           Yesod.Core.Types
 import           Yesod.Form
 
 bfs :: RenderMessage site msg => msg -> FieldSettings site
@@ -48,7 +53,7 @@ withSmallInput fs = fs { fsAttrs = newAttrs }
 
 addClass :: Text -> [(Text, Text)] -> [(Text, Text)]
 addClass klass []                    = [("class", klass)]
-addClass klass (("class", old):rest) = ("class", concat [old, " ", klass]) : rest
+addClass klass (("class", old):rest) = ("class", Data.Text.concat [old, " ", klass]) : rest
 addClass klass (other         :rest) = other : addClass klass rest
 
 data BootstrapGridOptions = ColXs !Int | ColSm !Int | ColMd !Int | ColLg !Int | ColXl !Int

@@ -10,7 +10,9 @@ category:            Web
 
 dependencies:
   - base >= 4.7 && < 5
-  - classy-prelude-yesod
+  - shakespeare
+  - text
+  - yesod-core
   - yesod-form
 
 library:
