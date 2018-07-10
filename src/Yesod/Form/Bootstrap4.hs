@@ -51,11 +51,6 @@ withSmallInput :: FieldSettings site -> FieldSettings site
 withSmallInput fs = fs { fsAttrs = newAttrs }
     where newAttrs = addClass "form-control-sm" (fsAttrs fs)
 
-addClass :: Text -> [(Text, Text)] -> [(Text, Text)]
-addClass klass []                    = [("class", klass)]
-addClass klass (("class", old):rest) = ("class", Data.Text.concat [old, " ", klass]) : rest
-addClass klass (other         :rest) = other : addClass klass rest
-
 data BootstrapGridOptions = ColXs !Int | ColSm !Int | ColMd !Int | ColLg !Int | ColXl !Int
     deriving (Eq, Ord, Show, Read)
 
