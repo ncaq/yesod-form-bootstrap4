@@ -20,13 +20,12 @@ module Yesod.Form.Bootstrap4
     , BootstrapSubmit(..)
     ) where
 
-import           Control.Arrow
-import           Data.Maybe
-import           Data.String
-import           Data.Text
-import           Text.Shakespeare.I18N
-import           Yesod.Core
-import           Yesod.Core.Types
+import           Control.Arrow (second)
+import           Data.Maybe    (isJust)
+import           Data.String   (IsString (..))
+import           Data.Text     (Text)
+import           Yesod.Core    (HandlerSite, MonadHandler, RenderMessage,
+                                SomeMessage (..), WidgetFor, whamlet)
 import           Yesod.Form
 
 bfs :: RenderMessage site msg => msg -> FieldSettings site

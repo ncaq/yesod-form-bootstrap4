@@ -1,5 +1,5 @@
 name:                yesod-form-bootstrap4
-version:             1.0.1
+version:             1.0.2
 synopsis:            renderBootstrap4
 github:              ncaq/yesod-form-bootstrap4
 license:             MIT
@@ -10,7 +10,6 @@ category:            Web
 
 dependencies:
   - base >= 4.7 && < 5
-  - shakespeare
   - text
   - yesod-core
   - yesod-form
