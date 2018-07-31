@@ -100,19 +100,18 @@ $forall view <- views
     $case formLayout
       $of BootstrapBasicForm
         $if fvId view /= bootstrapSubmitId
-          <label .form-control-label for=#{fvId view}>#{fvLabel view}
+          <label for=#{fvId view}>#{fvLabel view}
         ^{fvInput view}
         ^{helpWidget view}
       $of BootstrapInlineForm
         $if fvId view /= bootstrapSubmitId
-          <label .sr-only .form-control-label for=#{fvId view}>#{fvLabel view}
+          <label .sr-only for=#{fvId view}>#{fvLabel view}
         ^{fvInput view}
         ^{helpWidget view}
       $of BootstrapHorizontalForm labelOffset labelSize inputOffset inputSize
         $if fvId view /= bootstrapSubmitId
           <div .row>
             <label
-              .form-control-label
               .#{toOffset labelOffset}
               .#{toColumn labelSize}
               for=#{fvId view}>#{fvLabel view}
@@ -132,7 +131,7 @@ $forall view <- views
 helpWidget :: FieldView site -> WidgetFor site ()
 helpWidget view = [whamlet|
 $maybe err <- fvErrors view
-  <div .form-control-feedback>#{err}
+  <div .invalid-feedback>#{err}
 $maybe tt <- fvTooltip view
   <small .form-text .text-muted>#{tt}
 |]
