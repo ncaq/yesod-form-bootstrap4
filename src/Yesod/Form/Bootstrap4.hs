@@ -11,6 +11,7 @@ module Yesod.Form.Bootstrap4
   , BootstrapFormLayout(..)
   , BootstrapGridOptions(..)
   , bfs
+  , bfsFile
   , withPlaceholder
   , withAutofocus
   , withLargeInput
@@ -29,7 +30,14 @@ import           Yesod.Core    (HandlerSite, MonadHandler, RenderMessage,
 import           Yesod.Form
 
 bfs :: RenderMessage site msg => msg -> FieldSettings site
-bfs msg = FieldSettings (SomeMessage msg) Nothing Nothing Nothing [("class", "form-control")]
+bfs = bfsFileOrNo False
+
+bfsFile :: RenderMessage site msg => msg -> FieldSettings site
+bfsFile = bfsFileOrNo True
+
+bfsFileOrNo :: RenderMessage site msg => Bool -> msg -> FieldSettings site
+bfsFileOrNo isFile msg = FieldSettings (SomeMessage msg) Nothing Nothing Nothing [("class", classVal)]
+  where classVal = if isFile then "form-control-file" else "form-control"
 
 withPlaceholder :: Text -> FieldSettings site -> FieldSettings site
 withPlaceholder placeholder fs = fs { fsAttrs = newAttrs }
