@@ -30,14 +30,12 @@ import           Yesod.Core    (HandlerSite, MonadHandler, RenderMessage,
 import           Yesod.Form
 
 bfs :: RenderMessage site msg => msg -> FieldSettings site
-bfs = bfsFileOrNo False
+bfs msg
+  = FieldSettings (SomeMessage msg) Nothing Nothing Nothing [("class", "form-control")]
 
 bfsFile :: RenderMessage site msg => msg -> FieldSettings site
-bfsFile = bfsFileOrNo True
-
-bfsFileOrNo :: RenderMessage site msg => Bool -> msg -> FieldSettings site
-bfsFileOrNo isFile msg = FieldSettings (SomeMessage msg) Nothing Nothing Nothing [("class", classVal)]
-  where classVal = if isFile then "form-control-file" else "form-control"
+bfsFile msg
+  = FieldSettings (SomeMessage msg) Nothing Nothing Nothing [("class", "form-control-file")]
 
 withPlaceholder :: Text -> FieldSettings site -> FieldSettings site
 withPlaceholder placeholder fs = fs { fsAttrs = newAttrs }
