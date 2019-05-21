@@ -94,7 +94,7 @@ data BootstrapFormLayout = BootstrapBasicForm | BootstrapInlineForm |
   }
   deriving (Eq, Ord, Show, Read)
 
--- | Render the given form using Bootstrap v3 conventions.
+-- | Render the given form using Bootstrap v4 conventions.
 renderBootstrap4 :: Monad m => BootstrapFormLayout -> FormRender m a
 renderBootstrap4 formLayout aform fragment = do
   (res, views') <- aFormToForm aform
