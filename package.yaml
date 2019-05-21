@@ -1,12 +1,12 @@
-name:                yesod-form-bootstrap4
-version:             2.1.0
-synopsis:            renderBootstrap4
-github:              ncaq/yesod-form-bootstrap4
-license:             MIT
-author:              ncaq
-maintainer:          ncaq@ncaq.net
-copyright:           © ncaq
-category:            Web
+name: yesod-form-bootstrap4
+version: 2.1.0
+synopsis: renderBootstrap4
+github: ncaq/yesod-form-bootstrap4
+license: MIT
+author: ncaq
+maintainer: ncaq@ncaq.net
+copyright: © ncaq
+category: Web
 
 dependencies:
   - base >= 4.7 && < 5
