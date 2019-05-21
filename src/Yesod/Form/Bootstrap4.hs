@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleContexts  #-}
 {-# LANGUAGE NamedFieldPuns    #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes       #-}
@@ -21,12 +22,14 @@ module Yesod.Form.Bootstrap4
   , BootstrapSubmit(..)
   ) where
 
-import           Control.Arrow (second)
-import           Data.Maybe    (isJust)
-import           Data.String   (IsString (..))
-import           Data.Text     (Text)
-import           Yesod.Core    (HandlerSite, MonadHandler, RenderMessage,
-                                SomeMessage (..), WidgetFor, whamlet)
+import           Control.Arrow                 (second)
+import           Data.Maybe                    (isJust)
+import           Data.String                   (IsString (..))
+import           Data.Text                     (Text)
+import qualified Data.Text.Lazy                as TL
+import           Debug.Trace
+import           Text.Blaze.Html.Renderer.Text
+import           Yesod.Core
 import           Yesod.Form
 
 bfs :: RenderMessage site msg => msg -> FieldSettings site
@@ -102,36 +105,60 @@ renderBootstrap4 formLayout aform fragment = do
       widget = [whamlet|
 #{fragment}
 $forall view <- views
-  <div .form-group :isJust (fvErrors view):.has-danger>
-    $case formLayout
-      $of BootstrapBasicForm
-        $if fvId view /= bootstrapSubmitId
-          <label for=#{fvId view}>#{fvLabel view}
-        ^{fvInput view}
-        ^{helpWidget view}
-      $of BootstrapInlineForm
-        $if fvId view /= bootstrapSubmitId
-          <label .sr-only for=#{fvId view}>#{fvLabel view}
-        ^{fvInput view}
-        ^{helpWidget view}
-      $of BootstrapHorizontalForm labelOffset labelSize inputOffset inputSize
-        $if fvId view /= bootstrapSubmitId
-          <div .row>
-            <label
-              .#{toOffset labelOffset}
-              .#{toColumn labelSize}
-              for=#{fvId view}>#{fvLabel view}
-            <div .#{toOffset inputOffset} .#{toColumn inputSize}>
-              ^{fvInput view}
-              ^{helpWidget view}
-        $else
-          <div
-            .#{toOffset (addGO inputOffset (addGO labelOffset labelSize))}
-            .#{toColumn inputSize}>
+  $if inputTypeBoolOrCheckBox view
+    ^{renderCheckInput view}
+  $else
+    ^{renderGroupInput view formLayout}
+|]
+  return (res, widget)
+
+-- FIXME: `.form-check-input`を`input`につける方法がわからない
+renderCheckInput :: FieldView site -> WidgetFor site ()
+renderCheckInput view = [whamlet|
+<div .form-check>
+  ^{fvInput view}
+  <label .form-check-label for=#{fvId view}>
+  ^{helpWidget view}
+|]
+
+renderGroupInput :: FieldView site -> BootstrapFormLayout -> WidgetFor site ()
+renderGroupInput view formLayout = [whamlet|
+<div .form-group :isJust (fvErrors view):.has-danger>
+  $case formLayout
+    $of BootstrapBasicForm
+      $if fvId view /= bootstrapSubmitId
+        <label for=#{fvId view}>#{fvLabel view}
+      ^{fvInput view}
+      ^{helpWidget view}
+    $of BootstrapInlineForm
+      $if fvId view /= bootstrapSubmitId
+        <label .sr-only for=#{fvId view}>#{fvLabel view}
+      ^{fvInput view}
+      ^{helpWidget view}
+    $of BootstrapHorizontalForm labelOffset labelSize inputOffset inputSize
+      $if fvId view /= bootstrapSubmitId
+        <div .row>
+          <label
+            .#{toOffset labelOffset}
+            .#{toColumn labelSize}
+            for=#{fvId view}>#{fvLabel view}
+          <div .#{toOffset inputOffset} .#{toColumn inputSize}>
             ^{fvInput view}
             ^{helpWidget view}
-    |]
-  return (res, widget)
+      $else
+        <div
+          .#{toOffset (addGO inputOffset (addGO labelOffset labelSize))}
+          .#{toColumn inputSize}>
+          ^{fvInput view}
+          ^{helpWidget view}
+|]
+
+-- | 入力されたフィールドがcheck形式である必要があるか判定する
+-- HTMLの内容を`Monad`の範囲で見る方法が分からなかったため,ワークアラウンドとしてlabelの内容を見て判断します
+inputTypeBoolOrCheckBox :: FieldView site -> Bool
+inputTypeBoolOrCheckBox FieldView{fvLabel}
+  = let textLabel = traceShowId $ renderHtml fvLabel
+    in "radio" `TL.isInfixOf` textLabel || "checkbox" `TL.isInfixOf` textLabel
 
 -- | (Internal) Render a help widget for tooltips and errors.
 helpWidget :: FieldView site -> WidgetFor site ()

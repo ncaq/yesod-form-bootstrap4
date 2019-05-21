@@ -10,9 +10,29 @@ category: Web
 
 dependencies:
   - base >= 4.7 && < 5
+  - blaze-html
+  - blaze-markup
+  - shakespeare
   - text
   - yesod-core
   - yesod-form
+
+ghc-options:
+  - -Wall
+  # - -Wall-missed-specialisations
+  - -Widentities
+  # - -Wimplicit-prelude
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  # - -Wmissed-specialisations
+  # - -Wmissing-export-lists
+  - -Wmissing-exported-signatures
+  - -Wmissing-home-modules
+  # - -Wmissing-import-lists
+  # - -Wmissing-local-signatures
+  # - -Wmonomorphism-restriction
+  # - -Wpartial-fields
+  - -Wredundant-constraints
 
 library:
   source-dirs: src
