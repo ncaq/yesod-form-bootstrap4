@@ -115,7 +115,7 @@ $forall view <- views
 -- FIXME: `.form-check-input`を`input`につける方法がわからない
 renderCheckInput :: FieldView site -> WidgetFor site ()
 renderCheckInput view = [whamlet|
-<div .form-check>
+<div .form-check (fvErrors view):.is-invalid>
   ^{fvInput view}
   <label .form-check-label for=#{fvId view}>
   ^{helpWidget view}
@@ -123,34 +123,33 @@ renderCheckInput view = [whamlet|
 
 renderGroupInput :: FieldView site -> BootstrapFormLayout -> WidgetFor site ()
 renderGroupInput view formLayout = [whamlet|
-<div .form-group :isJust (fvErrors view):.has-danger>
-  $case formLayout
-    $of BootstrapBasicForm
-      $if fvId view /= bootstrapSubmitId
-        <label for=#{fvId view}>#{fvLabel view}
-      ^{fvInput view}
-      ^{helpWidget view}
-    $of BootstrapInlineForm
-      $if fvId view /= bootstrapSubmitId
-        <label .sr-only for=#{fvId view}>#{fvLabel view}
-      ^{fvInput view}
-      ^{helpWidget view}
-    $of BootstrapHorizontalForm labelOffset labelSize inputOffset inputSize
-      $if fvId view /= bootstrapSubmitId
-        <div .row>
-          <label
-            .#{toOffset labelOffset}
-            .#{toColumn labelSize}
-            for=#{fvId view}>#{fvLabel view}
-          <div .#{toOffset inputOffset} .#{toColumn inputSize}>
-            ^{fvInput view}
-            ^{helpWidget view}
-      $else
-        <div
-          .#{toOffset (addGO inputOffset (addGO labelOffset labelSize))}
-          .#{toColumn inputSize}>
+$case formLayout
+  $of BootstrapBasicForm
+    $if fvId view /= bootstrapSubmitId
+      <label for=#{fvId view}>#{fvLabel view}
+    ^{fvInput view}
+    ^{helpWidget view}
+  $of BootstrapInlineForm
+    $if fvId view /= bootstrapSubmitId
+      <label .sr-only for=#{fvId view}>#{fvLabel view}
+    ^{fvInput view}
+    ^{helpWidget view}
+  $of BootstrapHorizontalForm labelOffset labelSize inputOffset inputSize
+    $if fvId view /= bootstrapSubmitId
+      <div .row>
+        <label
+          .#{toOffset labelOffset}
+          .#{toColumn labelSize}
+          for=#{fvId view}>#{fvLabel view}
+        <div .#{toOffset inputOffset} .#{toColumn inputSize}>
           ^{fvInput view}
           ^{helpWidget view}
+    $else
+      <div
+        .#{toOffset (addGO inputOffset (addGO labelOffset labelSize))}
+        .#{toColumn inputSize}>
+        ^{fvInput view}
+        ^{helpWidget view}
 |]
 
 -- | 入力されたフィールドがcheck形式である必要があるか判定する
@@ -161,12 +160,19 @@ inputTypeBoolOrCheckBox FieldView{fvLabel}
     in "radio" `TL.isInfixOf` textLabel || "checkbox" `TL.isInfixOf` textLabel
 
 -- | (Internal) Render a help widget for tooltips and errors.
+-- .invalid-feedbackを必ず表示する
+-- bootstrap 4.1の書式ではinputがerrorでなければエラーメッセージが出ませんが
+-- yesod-formのAPIではfvInput自体を弄るのが困難ですし
+-- yesod-formのAPI上fvErrorsが存在する時は常にエラーメッセージは表示させるべきなので汚いやり方ですが
+-- styleを上書きして常に表示します
 helpWidget :: FieldView site -> WidgetFor site ()
 helpWidget view = [whamlet|
 $maybe err <- fvErrors view
-  <div .invalid-feedback>#{err}
+  <div .invalid-feedback style="display: block;">
+    #{err}
 $maybe tt <- fvTooltip view
-  <small .form-text .text-muted>#{tt}
+  <small .form-text .text-muted>
+    #{tt}
 |]
 
 -- | How the 'bootstrapSubmit' button should be rendered.
