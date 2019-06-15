@@ -23,7 +23,6 @@ module Yesod.Form.Bootstrap4
   ) where
 
 import           Control.Arrow                 (second)
-import           Data.Maybe                    (isJust)
 import           Data.String                   (IsString (..))
 import           Data.Text                     (Text)
 import qualified Data.Text.Lazy                as TL
