@@ -26,7 +26,6 @@ import           Control.Arrow                 (second)
 import           Data.String                   (IsString (..))
 import           Data.Text                     (Text)
 import qualified Data.Text.Lazy                as TL
-import           Debug.Trace
 import           Text.Blaze.Html.Renderer.Text
 import           Yesod.Core
 import           Yesod.Form
@@ -155,7 +154,7 @@ $case formLayout
 -- HTMLの内容を`Monad`の範囲で見る方法が分からなかったため,ワークアラウンドとしてlabelの内容を見て判断します
 inputTypeBoolOrCheckBox :: FieldView site -> Bool
 inputTypeBoolOrCheckBox FieldView{fvLabel}
-  = let textLabel = traceShowId $ renderHtml fvLabel
+  = let textLabel = renderHtml fvLabel
     in "radio" `TL.isInfixOf` textLabel || "checkbox" `TL.isInfixOf` textLabel
 
 -- | (Internal) Render a help widget for tooltips and errors.
