@@ -33,6 +33,7 @@ ghc-options:
   # - -Wmonomorphism-restriction
   # - -Wpartial-fields
   - -Wredundant-constraints
+  - -Wcompat
 
 library:
   source-dirs: src
