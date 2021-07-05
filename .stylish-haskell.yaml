@@ -218,12 +218,11 @@ columns: 80
 #
 # Default: native.
 newline: native
-
 # Sometimes, language extensions are specified in a cabal file or from the
 # command line instead of using language pragmas in the file. stylish-haskell
 # needs to be aware of these, so it can parse the file correctly.
 #
 # No language extensions are enabled by default.
 # language_extensions:
-  # - TemplateHaskell
-  # - QuasiQuotes
+# - TemplateHaskell
+# - QuasiQuotes
