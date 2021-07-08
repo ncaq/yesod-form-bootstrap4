@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes       #-}
 {-# LANGUAGE TypeFamilies      #-}
+{-# OPTIONS_GHC -Wno-partial-fields #-}
 
 -- | this program based on Yesod.Form.Bootstrap3 of yesod-form
 -- yesod-form under MIT license, author is Michael Snoyman <michael@snoyman.com>

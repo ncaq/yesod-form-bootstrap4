@@ -13,7 +13,7 @@ jobs:
       - run: stack setup
       - run: stack install --jobs 1 hlint
       - run: stack build --jobs 1 --only-dependencies
-      - run: stack build
+      - run: stack build --pedantic
       - save_cache:
           name: Cache Dependencies for Stack
           key: v1-stack-{{ checksum "stack.yaml.lock" }}-{{ checksum "package.yaml" }}
