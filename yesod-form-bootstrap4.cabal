@@ -1,13 +1,13 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.35.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ff804c9ca3d6cfbfd0739b046089da182760fe65913f9ba4743c2cc86a850a50
+-- hash: a7ba296dbf5ea70c67faaa6f5948a8c4f6566d8d54e429e1046352350b35532b
 
 name:           yesod-form-bootstrap4
-version:        3.0.1
+version:        3.0.1.0
 synopsis:       renderBootstrap4
 category:       Web
 homepage:       https://github.com/ncaq/yesod-form-bootstrap4#readme
