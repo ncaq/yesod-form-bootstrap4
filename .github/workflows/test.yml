@@ -1,0 +1,14 @@
+# 現在testは厳密には存在しませんが、
+# buildとlintなどをまとめる名前として適切なのはこれだと思います。
+# stackで実行するのは確かにtestで、
+# 今後パッケージを真面目に開発するならtestも追加します。
+name: test
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: freckle/stack-action@v4
+      - uses: haskell/actions/hlint-setup@v1
+      - uses: haskell/actions/hlint-run@v2

@@ -1,6 +1,6 @@
 [![Hackage](https://img.shields.io/hackage/v/yesod-form-bootstrap4.svg)](https://hackage.haskell.org/package/yesod-form-bootstrap4)
 [![yesod-form-bootstrap4 on Stackage LTS](http://stackage.org/package/yesod-form-bootstrap4/badge/lts)](http://stackage.org/lts/package/yesod-form-bootstrap4)
-[![Build Status](https://travis-ci.org/ncaq/yesod-form-bootstrap4.svg?branch=master)](https://travis-ci.org/ncaq/yesod-form-bootstrap4)
+[![test](https://github.com/ncaq/yesod-form-bootstrap4/actions/workflows/test.yml/badge.svg)](https://github.com/ncaq/yesod-form-bootstrap4/actions/workflows/test.yml)
 
 # yesod-form-bootstrap4
 
