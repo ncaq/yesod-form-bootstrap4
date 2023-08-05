@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes       #-}
 {-# LANGUAGE TypeFamilies      #-}
+{-# LANGUAGE TypeOperators     #-}
 {-# OPTIONS_GHC -Wno-partial-fields #-}
 
 -- | this program based on Yesod.Form.Bootstrap3 of yesod-form
