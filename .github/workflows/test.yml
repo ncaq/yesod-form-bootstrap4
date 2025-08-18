@@ -8,7 +8,7 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - id: generate
         uses: freckle/stack-action/generate-matrix@v5
     outputs:
@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: freckle/stack-action@v5
         with:
           stack-yaml: ${{ matrix.stack-yaml }}
